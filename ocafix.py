@@ -18,7 +18,7 @@ maxConcurrentHomeMatchesPerClub = {
 'University' : 2,
 'Witney'     : 2,
 'City'       : 2,
-'Cowley'     : 2,
+'Cowley'     : 3,
 'Banbury'    : 2,
 'Didcot'     : 2,
 'Bicester'   : 2,
@@ -45,9 +45,9 @@ teams = [
 ['City',       1, Monday],
 ['Cowley',     2, Thursday],
 ['Witney',     2, Monday],
-['Banbury',    1, Tuesday],
-['Didcot',     1, Wednesday],
+['Banbury',    1, Thursday],
 ['Cowley',     1, Monday],
+['Cumnor',     1, Thursday],
 ],
 
 # Division 2
@@ -55,25 +55,24 @@ teams = [
 [
 ['Bicester',   1, Tuesday],
 ['University', 2, Thursday],
-['Banbury',    2, Tuesday],
+['Banbury',    2, Thursday],
 ['Wantage',    1, Tuesday],
-['Cowley',     3, Monday],
-['Cumnor',     1, Thursday],
 ['City',       2, Monday],
-['Cowley',     4, Thursday],
+['Cowley',     3, Monday],
+['Didcot',     1, Wednesday],
+['Didcot',     2, Monday],
 ],
 
 # Division 3
 
 [
-['Didcot',     2, Monday],
-['MCS/B',      1, Thursday],
 ['Didcot',     3, Wednesday],
-['Banbury',    3, Tuesday],
+['Banbury',    3, Thursday],
 ['City',       3, Monday],
-['Cumnor',     2, Thursday],
+['Cowley',     4, Thursday],
 ['Witney',     3, Monday],
 ['Cowley',     5, Monday],
+['Abingdon',   1, Monday],
 ],
 
 # Division 4
@@ -81,11 +80,11 @@ teams = [
 [
 ['Didcot',     4, Monday],
 ['University', 3, Thursday],
-['Abingdon',   1, Monday],
 ['Witney',     4, Monday],
 ['Bicester',   2, Tuesday],
 ['Wantage',    2, Tuesday],
 ['Cowley',     6, Thursday],
+['Cumnor',     2, Thursday],
 ],
 
 ]
@@ -98,130 +97,44 @@ clubsForEarlyScheduling = [
 
 # Following clubs hve expressed desire that they don't have adjacent teams (e.g. team N and team N+1) playing on the same night.
 
-adjacentIssueClubs = ['Witney', 'Didcot', 'Cowley']
+#adjacentIssueClubs = ['Witney', 'Didcot', 'Cowley']
+
+adjacentIssueClubs = ['Witney', 'Didcot','Cowley']
 
 # Following days will be excluded from fixtures for everyone
 
 globalExcludedDays = [
-date(2019,4,8),        # Peter Wells' Simultaneous
-date(2019,2,4),        # Kidlington Tournament Hangover
-date(2018,11,5),       # Witney Weekend Congress Hangover
-date(2019,4,19),       # Good Friday
-date(2019,4,22),       # Easter Bank Holiday 
-date(2019,4,22),       # Cowley Blitz 
+date(2020,4,20),       # Peter Wells' Simultaneous
+date(2020,2,3),        # Kidlington Tournament Hangover
+date(2019,11,4),       # Witney Weekend Congress Hangover
+date(2020,4,10),       # Good Friday
+date(2020,4,13),       # Easter Bank Holiday 
+date(2020,6,8),        # Cowley Blitz 
 ]
 
 # Following days will be excluded from fixtures for specific teams
 teamExcludedDays = {
     
   'Cowley2'     : [
-      date(2019,4,18),       # Maunday Thursday
+      date(2020,4,9),  # Maunday Thursday
    ],
-   'Banbury1'   : [
-       date(2018,9,11),       # Leamington Leagure clashes
-       date(2018,9,18),       # Leamington Leagure clashes
-       date(2018,9,26),       # Leamington Leagure clashes
-       date(2018,10,9),       # Leamington Leagure clashes
-       date(2018,10,10),      # Leamington Leagure clashes
-       date(2018,10,22),      # Leamington Leagure clashes
-       date(2018,10,30),      # Leamington Leagure clashes
-       date(2018,11,5),       # Leamington Leagure clashes
-       date(2018,11,6),       # Leamington Leagure clashes
-       date(2018,11,20),      # Leamington Leagure clashes
-       date(2018,11,28),      # Leamington Leagure clashes
-       date(2018,12,3),       # Leamington Leagure clashes
-       date(2018,12,18),      # Leamington Leagure clashes
-       date(2019,1,7),       # Leamington Leagure clashes
-       date(2019,1,8),       # Leamington Leagure clashes
-       date(2019,1,14),      # Leamington Leagure clashes
-       date(2019,1,22),      # Leamington Leagure clashes
-       date(2019,2,5),       # Leamington Leagure clashes
-       date(2019,2,26),      # Leamington Leagure clashes
-       date(2019,3,19),      # Leamington Leagure clashes
-       date(2019,3,26),      # Leamington Leagure clashes
-       date(2019,4,2),       # Leamington Leagure clashes
-       date(2019,4,9),       # Leamington Leagure clashes
-       date(2019,4,10),      # Leamington Leagure clashes
-       date(2019,4,15),      # Leamington Leagure clashes
-       date(2019,4,16),      # Leamington Leagure clashes
-       date(2019,5,1),       # Leamington Leagure clashes
-       date(2019,5,7),       # Leamington Leagure clashes
-   ],
-   'Banbury2'   : [
-       date(2018,9,11),       # Leamington Leagure clashes
-       date(2018,9,18),       # Leamington Leagure clashes
-       date(2018,9,26),       # Leamington Leagure clashes
-       date(2018,10,10),      # Leamington Leagure clashes
-       date(2018,10,17),      # Leamington Leagure clashes
-       date(2018,10,30),      # Leamington Leagure clashes
-       date(2018,11,5),       # Leamington Leagure clashes
-       date(2018,11,13),      # Leamington Leagure clashes
-       date(2018,11,20),      # Leamington Leagure clashes
-       date(2018,11,27),      # Leamington Leagure clashes
-       date(2018,12,3),       # Leamington Leagure clashes
-       date(2018,12,4),       # Leamington Leagure clashes
-       date(2018,12,10),      # Leamington Leagure clashes
-       date(2018,12,18),      # Leamington Leagure clashes
-       date(2019,1,8),        # Leamington Leagure clashes
-       date(2019,1,14),       # Leamington Leagure clashes
-       date(2019,1,22),       # Leamington Leagure clashes
-       date(2019,2,4),        # Leamington Leagure clashes
-       date(2019,2,11),       # Leamington Leagure clashes
-       date(2019,2,19),       # Leamington Leagure clashes
-       date(2019,2,25),       # Leamington Leagure clashes
-       date(2019,2,26),       # Leamington Leagure clashes
-       date(2019,3,5),        # Leamington Leagure clashes
-       date(2019,3,19),       # Leamington Leagure clashes
-       date(2019,3,26),       # Leamington Leagure clashes
-       date(2019,4,9),        # Leamington Leagure clashes
-       date(2019,4,16),       # Leamington Leagure clashes
-       date(2019,5,1),        # Leamington Leagure clashes
-       date(2019,5,7),        # Leamington Leagure clashes
-   ],
-   'Banbury3'   : [
-       date(2018,9,11),       # Leamington Leagure clashes
-       date(2018,10,2),       # Leamington Leagure clashes
-       date(2018,10,10),      # Leamington Leagure clashes
-       date(2018,10,17),      # Leamington Leagure clashes
-       date(2018,11,13),      # Leamington Leagure clashes
-       date(2018,11,20),      # Leamington Leagure clashes
-       date(2018,11,27),      # Leamington Leagure clashes
-       date(2018,12,4),       # Leamington Leagure clashes
-       date(2018,12,10),      # Leamington Leagure clashes
-       date(2019,1,8),        # Leamington Leagure clashes
-       date(2019,1,9),        # Leamington Leagure clashes
-       date(2019,1,23),       # Leamington Leagure clashes
-       date(2019,1,28),       # Leamington Leagure clashes
-       date(2019,2,4),        # Leamington Leagure clashes
-       date(2019,2,5),        # Leamington Leagure clashes
-       date(2019,2,11),       # Leamington Leagure clashes
-       date(2019,2,12),       # Leamington Leagure clashes
-       date(2019,2,19),       # Leamington Leagure clashes
-       date(2019,2,25),       # Leamington Leagure clashes
-       date(2019,2,26),       # Leamington Leagure clashes
-       date(2019,3,5),        # Leamington Leagure clashes
-       date(2019,3,12),       # Leamington Leagure clashes
-       date(2019,3,19),       # Leamington Leagure clashes
-       date(2019,3,27),       # Leamington Leagure clashes
-       date(2019,4,3),        # Leamington Leagure clashes
-       date(2019,5,1),        # Leamington Leagure clashes
-       date(2019,5,7),        # Leamington Leagure clashes
-   ],
-
-}
+ }
 
 availablePeriods = {
 
 'Abingdon' : [
-[ date(2018,9,4), date(2018,12,14) ],     # Michaelmas
-[ date(2019,1,8), date(2019,3,29) ],      # Lent
-[ date(2019,4,24), date(2019,7,5) ],      # Summer
+[ date(2019,9,3), date(2019,10,11) ],     # Michaelmas 1st half
+[ date(2019,10,28), date(2019,12,13) ],   # Michaelmas 2nd half
+[ date(2020,1,7), date(2020,2,14) ],      # Lent 1st half
+[ date(2020,2,24), date(2020,3,27) ],     # Lent 2nd half
+[ date(2020,4,21), date(2020,5,22) ],     # Summer 1st half
+[ date(2020,6,1), date(2020,7,3) ],       # Summer 2nd half
 ],
 
 'University' : [
-[ date(2018,10,14), date(2018,12,1) ],    # Michaelmas:  2nd to 7th week
-[ date(2019,1,13), date(2019,3,9) ],      # Hilary:      1st to 8th week
-[ date(2019,4,28), date(2019,5,26) ],     # Trinity:     1st to 4th week
+[ date(2019,10,14), date(2019,12,6) ],    # Michaelmas:  2nd to 7th week
+[ date(2020,1,20), date(2020,3,13) ],     # Hilary:      1st to 8th week
+[ date(2020,4,27), date(2020,5,19) ],     # Trinity:     1st to 4th week
 ],
 
 }
@@ -229,19 +142,17 @@ availablePeriods = {
 # Weeks with the following days in them will be excluded from fixtures for everyone
 
 globalExcludedWeeks = [
-#date(2019,4,1).isocalendar()[1],
-#date(2019,4,8).isocalendar()[1],
-#date(2019,4,15).isocalendar()[1],
-#date(2019,4,22).isocalendar()[1],
+#date(2020,4,6).isocalendar()[1],
+date(2020,12,1).isocalendar()[1],
 ]
 
 # Define the two halves of the season
 
-firstDateOfFirstHalf=date(2018,10,1)
-lastDateOfFirstHalf=date(2018,12,21)
+firstDateOfFirstHalf=date(2019,9,30)
+lastDateOfFirstHalf=date(2019,12,13)
 
-firstDateOfSecondHalf=date(2019,1,7)
-lastDateOfSecondHalf=date(2019,5,16)
+firstDateOfSecondHalf=date(2020,1,6)
+lastDateOfSecondHalf=date(2020,5,1)
 
 bestScore = 99999
 
