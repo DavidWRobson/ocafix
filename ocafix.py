@@ -9,23 +9,23 @@
 #######################################################################
 
 from datetime import date,timedelta
+import os
 import pickle
 import random
 import sys
 
 maxConcurrentHomeMatchesPerClub = {
 
-'University' : 2,
+'University' : 3,
 'Witney'     : 2,
 'City'       : 2,
-'Cowley'     : 3,
+'Cowley'     : 2,
 'Banbury'    : 2,
 'Didcot'     : 2,
-'Bicester'   : 2,
-'Wantage'    : 2,
-'Cumnor'     : 2,
-'MCS/B'      : 2,
-'Abingdon'   : 2,
+'Wantage'    : 1,
+'Cumnor'     : 1,
+'MCS'        : 2,
+'Abingdon'   : 1,
 
 }
 
@@ -33,6 +33,9 @@ Monday    = 0
 Tuesday   = 1
 Wednesday = 2
 Thursday  = 3
+Friday    = 4
+Saturday  = 5
+Sunday    = 6
 
 # Club,TeamNumber,Division,Match Night (Monday=0)
 
@@ -40,51 +43,42 @@ teams = [
 
 # Division 1
 [
-['University', 1, Thursday],
-['Witney',     1, Monday],
-['City',       1, Monday],
-['Cowley',     2, Thursday],
-['Witney',     2, Monday],
 ['Banbury',    1, Thursday],
-['Cowley',     1, Monday],
+['City',       1, Wednesday],
+['Cowley',     1, Thursday],
 ['Cumnor',     1, Thursday],
+['Didcot',     1, Monday],
+['University', 1, Monday],
+['University', 2, Thursday],
+['Witney',     1, Monday],
 ],
 
 # Division 2
 
 [
-['Bicester',   1, Tuesday],
-['University', 2, Thursday],
-['Banbury',    2, Thursday],
+['MCS',        1, Monday],
+['Cowley',     2, Monday],
 ['Wantage',    1, Tuesday],
-['City',       2, Monday],
-['Cowley',     3, Monday],
-['Didcot',     1, Wednesday],
+['Witney',     2, Monday],
+['City',       2, Wednesday],
 ['Didcot',     2, Monday],
+['Abingdon',   1, Monday],
+['Cumnor',     2, Thursday],
+['Banbury',    2, Thursday],
 ],
 
 # Division 3
 
 [
+['University', 3, Monday],
 ['Didcot',     3, Wednesday],
-['Banbury',    3, Thursday],
-['City',       3, Monday],
-['Cowley',     4, Thursday],
+['City',       3, Wednesday],
+['City',       4, Wednesday],
+['Cowley',     3, Thursday],
 ['Witney',     3, Monday],
-['Cowley',     5, Monday],
-['Abingdon',   1, Monday],
-],
-
-# Division 4
-
-[
-['Didcot',     4, Monday],
-['University', 3, Thursday],
-['Witney',     4, Monday],
-['Bicester',   2, Tuesday],
+['Cowley',     4, Monday],
+['MCS',        2, Monday],
 ['Wantage',    2, Tuesday],
-['Cowley',     6, Thursday],
-['Cumnor',     2, Thursday],
 ],
 
 ]
@@ -92,49 +86,50 @@ teams = [
 # Following clubs will be scheduled as early in the season as possible
 
 clubsForEarlyScheduling = [
-'University'
+'University',
 ]
 
-# Following clubs hve expressed desire that they don't have adjacent teams (e.g. team N and team N+1) playing on the same night.
-
-#adjacentIssueClubs = ['Witney', 'Didcot', 'Cowley']
+# Following clubs have expressed desire that they don't have adjacent teams (e.g. team N and team N+1) playing on the same night.
 
 adjacentIssueClubs = ['Witney', 'Didcot','Cowley']
 
 # Following days will be excluded from fixtures for everyone
 
 globalExcludedDays = [
-date(2020,4,20),       # Peter Wells' Simultaneous
-date(2020,2,3),        # Kidlington Tournament Hangover
-date(2019,11,4),       # Witney Weekend Congress Hangover
-date(2020,4,10),       # Good Friday
-date(2020,4,13),       # Easter Bank Holiday 
-date(2020,6,8),        # Cowley Blitz 
+date(2024,2,5),        # Kidlington Tournament Hangover
+date(2023,11,6),       # Witney Weekend Congress Hangover
+date(2024,3,29),       # Good Friday
+date(2024,3,31),       # Easter Bank Holiday 
+date(2023,12,4),       # Cowley Blitz 
 ]
 
 # Following days will be excluded from fixtures for specific teams
 teamExcludedDays = {
     
-  'Cowley2'     : [
-      date(2020,4,9),  # Maunday Thursday
+  'Cowley1'     : [
+      date(2024,3,28),  # Maunday Thursday
    ],
  }
 
 availablePeriods = {
 
 'Abingdon' : [
-[ date(2019,9,3), date(2019,10,11) ],     # Michaelmas 1st half
-[ date(2019,10,28), date(2019,12,13) ],   # Michaelmas 2nd half
-[ date(2020,1,7), date(2020,2,14) ],      # Lent 1st half
-[ date(2020,2,24), date(2020,3,27) ],     # Lent 2nd half
-[ date(2020,4,21), date(2020,5,22) ],     # Summer 1st half
-[ date(2020,6,1), date(2020,7,3) ],       # Summer 2nd half
+[ date(2023,9,5), date(2023,10,12) ],     # Michaelmas 1st half
+[ date(2023,10,30), date(2023,12,14) ],   # Michaelmas 2nd half
+[ date(2024,1,10), date(2024,2,8) ],      # Lent 1st half
+[ date(2024,2,19), date(2024,3,31) ],     # Lent 2nd half
+],
+
+'MCS' : [
+[ date(2023,9,6), date(2023,12,14) ],     # Autumn Term
+[ date(2024,1,9), date(2024,3,24) ],      # Spring Term
+[ date(2024,4,17), date(2024,7,8) ],      # Summer Term
 ],
 
 'University' : [
-[ date(2019,10,14), date(2019,12,6) ],    # Michaelmas:  2nd to 7th week
-[ date(2020,1,20), date(2020,3,13) ],     # Hilary:      1st to 8th week
-[ date(2020,4,27), date(2020,5,19) ],     # Trinity:     1st to 4th week
+[ date(2023,10,16), date(2023,11,24) ],   # Michaelmas:  2nd to 7th week
+[ date(2024,1,15), date(2024,3,8) ],      # Hilary:      1st to 8th week
+[ date(2024,4,22), date(2024,5,17) ],     # Trinity:     1st to 4th week
 ],
 
 }
@@ -142,26 +137,35 @@ availablePeriods = {
 # Weeks with the following days in them will be excluded from fixtures for everyone
 
 globalExcludedWeeks = [
-#date(2020,4,6).isocalendar()[1],
-date(2020,12,1).isocalendar()[1],
+date(2023,12,19).isocalendar()[1], # Christmas Period
+date(2023,12,26).isocalendar()[1], # Christmas Period
+date(2024,1,1).isocalendar()[1],   # Christmas Period
 ]
 
 # Define the two halves of the season
 
-firstDateOfFirstHalf=date(2019,9,30)
-lastDateOfFirstHalf=date(2019,12,13)
+firstDateOfFirstHalf=date(2023,9,18)
+lastDateOfFirstHalf=date(2024,1,19)
 
-firstDateOfSecondHalf=date(2020,1,6)
-lastDateOfSecondHalf=date(2020,5,1)
+firstDateOfSecondHalf=date(2024,1,22)
+lastDateOfSecondHalf=date(2024,5,20)
 
 bestScore = 99999
 
 fixtures = []
 fixtureDate = {}  # key is homeClub.HomeTeamNumber.awayClub.awayTeamNumber
 
+if os.getenv( 'OCAFIX_DEBUG') != None:
+   debug = True
+else:
+   debug = False
+
 #---------------------------------------------------------------------------------------
 
 def isFixtureOK ( pdate, pdivision, phomeClub, phomeTeamNumber, pawayClub, pawayTeamNumber,phomeClubNight):
+
+    if debug:
+       print("TRY",pdate,phomeClub, phomeTeamNumber, pawayClub, pawayTeamNumber)
 
     pweek = pdate.isocalendar()[1]
     homeFixturesOnThisDay = 0
@@ -176,7 +180,7 @@ def isFixtureOK ( pdate, pdivision, phomeClub, phomeTeamNumber, pawayClub, paway
     if pweek in globalExcludedWeeks:
        return False
 
-# Check that home team is playing in a their allowed period
+# Check that home team is playing in their allowed period
 
     inAllowedPeriod = False
     try:
@@ -221,8 +225,6 @@ def isFixtureOK ( pdate, pdivision, phomeClub, phomeTeamNumber, pawayClub, paway
     except KeyError:
         pass
 
-    bicester1AtHomeOnThisDay  = False
-
     for fixture in fixtures:
         fdiv, fhomeClub, fhomeTeamNumber, fawayClub, fawayTeamNumber,fhomeClubNight = fixture
         fdate = fixtureDate[fhomeClub + str(fhomeTeamNumber) + fawayClub + str(fawayTeamNumber)]
@@ -257,7 +259,7 @@ def isFixtureOK ( pdate, pdivision, phomeClub, phomeTeamNumber, pawayClub, paway
 
 # Check if proposed home team already has a home fixture in this week
 # Exclude the University, because of their short terms
-        
+
               if phomeClub == fhomeClub and phomeClub != 'University' and phomeTeamNumber == fhomeTeamNumber:
                  return False
 
@@ -295,7 +297,7 @@ def isFixtureOK ( pdate, pdivision, phomeClub, phomeTeamNumber, pawayClub, paway
               if (pawayClub == fhomeClub and pawayTeamNumber == fhomeTeamNumber) or pawayClub == fawayClub and pawayTeamNumber == fawayTeamNumber:
                  return False
 
-# Ensure that adjacent teams (for clubs who have expressed such a prfeference), don't play on the same night
+# Ensure that adjacent teams (for clubs who have expressed such a preference), don't play on the same night
 # Note, it doesn't look possible to do this for all clubs
 
               if  phomeClub in adjacentIssueClubs:
@@ -313,6 +315,9 @@ def isFixtureOK ( pdate, pdivision, phomeClub, phomeTeamNumber, pawayClub, paway
 
                  if pawayClub == fawayClub and abs( pawayTeamNumber - fawayTeamNumber ) == 1:
                     return False
+
+    if debug:
+        print("OK!",pdate,phomeClub, phomeTeamNumber, pawayClub, pawayTeamNumber)
 
     return True
 
@@ -390,11 +395,23 @@ def attemptFixtures():
 
              if not fixtureOK:
                 for attempt in range(0,150):
+
                    candidateDate = firstDateOfHalf + timedelta((homeClubNight - firstDayOfHalf) % 7)
+
+                   # Add a random shift of a whole number of weeks if non inter-club match
+
                    if homeClub != awayClub: 
                       # Add a random shift of a whole number of weeks
                       randomWeekShift = 7 * int(random.randint(0,seasonLength - 7) / 7) 
                       candidateDate += timedelta(randomWeekShift)
+
+# Hack for University
+
+                   if homeClub == 'University' and awayClub == 'University':
+                      if homeTeamNumber == 1:
+                         candidateDate = date(2023,10,23)
+                      else:
+                         candidateDate = date(2024,1,25)
 
                    fixtureOK = isFixtureOK ( candidateDate, fdiv, homeClub, homeTeamNumber, awayClub, \
                                              awayTeamNumber,homeClubNight )
@@ -443,11 +460,6 @@ def scoreSimulation():
 
                if awayClub == lawayClub and abs( awayTeamNumber - lawayTeamNumber ) == 1:
                   scoreForAwayTeamThisFixture =  scoreForAwayTeamThisFixture * 3 + 1
-
-# Decrease score if Bicester teams are playing home matches on the same day
-
-               if homeClub == 'Bicester' and lhomeClub == 'Bicester' and homeTeamNumber != lhomeTeamNumber:
-                  score -= 10
 
             score += scoreForHomeTeamThisFixture + scoreForAwayTeamThisFixture
 

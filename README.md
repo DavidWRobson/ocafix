@@ -21,6 +21,8 @@ where N is the number of simulations to be evaluated.
 
 ### In a web browser
 
+Note that this is unlikely to work as the tight constraints require too larger execution team available at mybinder
+
 Go to https://mybinder.org/v2/gh/DavidWRobson/ocafix/master
 
 Click on the ocafix.ipynb link
@@ -38,17 +40,15 @@ Click on the area saying "run -i 'ocafix.py'"  This will make sure it is highlig
 7. No team plays more than one match in the same week (except for the University)
 8. No fixtures scheduled for the day after Kidlington
 9. No fixtures scheduled for the day after The Witney Congress
-9. No fixtures scheduled for Easter Bank Holiday
-10. No fixtures scheduled for the day of the Peter Wells' simultaneous event
+10. No fixtures scheduled for Easter Bank Holiday
 11. No fixtures scheduled for the day of the Cowley Blitz
-12. Fixtures between teams from the same club are scheduled at the begining of each half of the season
-13. No matches to be scheduled outside ranges specified for clubs. Currently Abingdon School terms and University terms, excluding Michaelmas 1st week for initial preparation and Trinity 5th to 8th week for exams.
-14. Clubs do not have more than a specified number of fixtures at home on the same day (currently 2 for all clubs)
+12. Fixtures between teams from the same club are scheduled as near to the begining of each half of the season as possible
+13. No matches to be scheduled outside ranges specified for clubs. Currently MCS, Abingdon School terms and University terms, excluding Michaelmas 1st week for initial preparation and Trinity 5th to 8th week for exams.
+14. Clubs do not have more than a specified number of fixtures at home on the same day (currently 2 for most clubs)
 15. Cowley does not have more than 1 fixtures at home on the third Monday of the month to avoid clash with Stamp Club.
 16. The number of teams that have adjacent teams playing on the same night is minimized.
 17. The number of times both Bicester teams play at home on the same night is maximize
 18. Cowley Didcot and Witney teams don't have "adjacent" (e.g. Team N and Team N+1) playing on the same night.
-19. The Banbury teams are excluded from playing on the 84! nights in which there are clashes with the Leamington and Warwick leagues,.
 
 ## Conversion to a Windows executable
 
