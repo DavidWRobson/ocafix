@@ -26,6 +26,7 @@ maxConcurrentHomeMatchesPerClub = {
 'Cumnor'     : 1,
 'MCS'        : 2,
 'Abingdon'   : 1,
+'Watlington' : 1,
 
 }
 
@@ -79,6 +80,7 @@ teams = [
 ['Cowley',     4, Monday],
 ['MCS',        2, Monday],
 ['Wantage',    2, Tuesday],
+['Watlington', 2, Thursday],
 ],
 
 ]
@@ -522,12 +524,13 @@ def main(argv):
              print ("Argument", argv[1], "is not a valid number of simulations", file=sys.stderr)
              sys.exit(2)
        
-       solutionFound = False
+       solutionsFound = 1
        for j in range(0, numberOfSimulations):
            if trySimulation(j):
-              solutionFound = True
+              solutionsFound += 1
 
-       if solutionFound:
+       if solutionsFound > 0:
+          print(str(solutionsFound) + " Solution(s) found: Best is ...")
           printFixtureList()
           sys.exit(0)
 
