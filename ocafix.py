@@ -5,13 +5,14 @@
 # 2018-05-24 Created
 #
 # The number of simulations to be undertaken is supplied by an argument.
-# The default is one.
+# The default is 50
 #######################################################################
 
 from datetime import date,timedelta
 import os
 import pickle
 import random
+import statistics
 import sys
 
 maxConcurrentHomeMatchesPerClub = {
@@ -430,6 +431,9 @@ def attemptFixtures():
 
 def scoreSimulation():
 
+# This function scores the successful simulation on various criteria
+# The LOWEST score is the better
+
     score = 0
 
     for fixture in fixtures:
@@ -465,6 +469,32 @@ def scoreSimulation():
 
             score += scoreForHomeTeamThisFixture + scoreForAwayTeamThisFixture
 
+# Calculate the number of home matches each team has in the first half of the season and then
+# determine the standard deviation of these figures.   This should be a measure of how often
+# teams have a string of home (or away) matches, which is not considered to be desirable
+
+    homeMatchesInFirstHalf = []
+    for division in teams:
+        for team in division:
+            lclub, lnumTeams, lclubNight = team
+            for lTeamNumber in range( 1, lnumTeams + 1):
+
+                count = 0
+                for fixture in fixtures:
+                    div, homeClub, homeTeamNumber, awayClub, awayTeamNumber,homeClubNight = fixture
+                    fdate = fixtureDate[homeClub + str(homeTeamNumber) + awayClub + str(awayTeamNumber)]
+                    if lclub == homeClub and lTeamNumber == homeTeamNumber and fdate <= lastDateOfFirstHalf:
+                       count += 1
+
+            homeMatchesInFirstHalf.append( count )
+
+    stddev = statistics.stdev( homeMatchesInFirstHalf )
+    score += 30 * int(stddev)
+
+    if debug:
+        print(homeMatchesInFirstHalf)
+        print("Stddev = " + str(stddev))
+
     return score
 
 #---------------------------------------------------------------------------------------
@@ -486,7 +516,11 @@ def trySimulation(count):
          pickle.dump( [fixtures,fixtureDate] , open( "fixtures.pickle", "wb" ) )
 
    if itWorked:
+      if debug:
+         print("Simulation succeeded with a score of " + str(score))
       return True
+   if debug:
+      print("Simulation failed")
    return False
 
 #---------------------------------------------------------------------------------------
