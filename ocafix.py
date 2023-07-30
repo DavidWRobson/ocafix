@@ -558,7 +558,7 @@ def main(argv):
              print ("Argument", argv[1], "is not a valid number of simulations", file=sys.stderr)
              sys.exit(2)
        
-       solutionsFound = 1
+       solutionsFound = 0
        for j in range(0, numberOfSimulations):
            if trySimulation(j):
               solutionsFound += 1
@@ -576,3 +576,4 @@ def main(argv):
 
 if __name__ == "__main__":
     main( sys.argv)
+
