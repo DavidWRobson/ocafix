@@ -375,55 +375,54 @@ def attemptFixtures():
 
    # Generate fixture dates
 
-   for division in range(0,len(teams)):
-      for fixture in fixtures:
-          fdiv, homeClub, homeTeamNumber, awayClub, awayTeamNumber,homeClubNight = fixture
-          fdate = fixtureDate[homeClub + str(homeTeamNumber) + awayClub + str(awayTeamNumber)]
+   for fixture in fixtures:
+       fdiv, homeClub, homeTeamNumber, awayClub, awayTeamNumber,homeClubNight = fixture
+       fdate = fixtureDate[homeClub + str(homeTeamNumber) + awayClub + str(awayTeamNumber)]
 
-          if fdate is None:
-            # If return match already scheduled, schedule this one in the second half
-             if  fixtureDate[awayClub + str(awayTeamNumber) + homeClub + str(homeTeamNumber)] is None:
-                 firstDateOfHalf = firstDateOfFirstHalf
-                 lastDateofHalf = lastDateOfFirstHalf
-             # Otherwise schedule this in the first half
-             else:
-                 firstDateOfHalf = firstDateOfSecondHalf
-                 lastDateofHalf = lastDateOfSecondHalf
-             firstDayOfHalf = date.weekday(firstDateOfHalf)
-             seasonLength = (lastDateofHalf - firstDateOfHalf).days
+       if fdate is None:
+         # If return match already scheduled, schedule this one in the second half
+          if  fixtureDate[awayClub + str(awayTeamNumber) + homeClub + str(homeTeamNumber)] is None:
+              firstDateOfHalf = firstDateOfFirstHalf
+              lastDateofHalf = lastDateOfFirstHalf
+          # Otherwise schedule this in the first half
+          else:
+              firstDateOfHalf = firstDateOfSecondHalf
+              lastDateofHalf = lastDateOfSecondHalf
+          firstDayOfHalf = date.weekday(firstDateOfHalf)
+          seasonLength = (lastDateofHalf - firstDateOfHalf).days
 
-             fixtureOK = False;
+          fixtureOK = False;
 
 # Try random dates in an attempt to spread the fixtures evenly through the available times
 
-             if not fixtureOK:
-                for attempt in range(0,150):
+          if not fixtureOK:
+             for attempt in range(0,150):
 
-                   candidateDate = firstDateOfHalf + timedelta((homeClubNight - firstDayOfHalf) % 7)
+                candidateDate = firstDateOfHalf + timedelta((homeClubNight - firstDayOfHalf) % 7)
 
-                   # Add a random shift of a whole number of weeks if non inter-club match
+                # Add a random shift of a whole number of weeks if non inter-club match
 
-                   if homeClub != awayClub: 
-                      # Add a random shift of a whole number of weeks
-                      randomWeekShift = 7 * int(random.randint(0,seasonLength - 7) / 7) 
-                      candidateDate += timedelta(randomWeekShift)
+                if homeClub != awayClub: 
+                   # Add a random shift of a whole number of weeks
+                   randomWeekShift = 7 * int(random.randint(0,seasonLength - 7) / 7) 
+                   candidateDate += timedelta(randomWeekShift)
 
 # Hack for University
 
-                   if homeClub == 'University' and awayClub == 'University':
-                      if homeTeamNumber == 1:
-                         candidateDate = date(2023,10,23)
-                      else:
-                         candidateDate = date(2024,1,25)
+                if homeClub == 'University' and awayClub == 'University':
+                   if homeTeamNumber == 1:
+                      candidateDate = date(2023,10,23)
+                   else:
+                      candidateDate = date(2024,1,25)
 
-                   fixtureOK = isFixtureOK ( candidateDate, fdiv, homeClub, homeTeamNumber, awayClub, \
-                                             awayTeamNumber,homeClubNight )
-                   if fixtureOK:
-                      break 
-                if not fixtureOK:
-                   return False
+                fixtureOK = isFixtureOK ( candidateDate, fdiv, homeClub, homeTeamNumber, awayClub, \
+                                          awayTeamNumber,homeClubNight )
+                if fixtureOK:
+                   break 
+             if not fixtureOK:
+                return False
         
-             fixtureDate[homeClub + str(homeTeamNumber) + awayClub + str(awayTeamNumber)] = candidateDate
+          fixtureDate[homeClub + str(homeTeamNumber) + awayClub + str(awayTeamNumber)] = candidateDate
 
    return True
 
