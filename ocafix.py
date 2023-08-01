@@ -24,7 +24,7 @@ maxConcurrentHomeMatchesPerClub = {
 'Banbury'    : 2,
 'Didcot'     : 2,
 'Wantage'    : 1,
-'Cumnor'     : 1,
+'Cumnor'     : 2,
 'MCS'        : 2,
 'Abingdon'   : 1,
 'Watlington' : 1,
@@ -102,7 +102,7 @@ globalExcludedDays = [
 date(2024,2,5),        # Kidlington Tournament Hangover
 date(2023,11,6),       # Witney Weekend Congress Hangover
 date(2024,3,29),       # Good Friday
-date(2024,3,31),       # Easter Bank Holiday 
+date(2024,4,1),       # Easter Bank Holiday 
 date(2023,12,4),       # Cowley Blitz 
 ]
 
