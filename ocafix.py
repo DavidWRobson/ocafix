@@ -50,6 +50,7 @@ teams = [
 ['Cowley',     1, Thursday],
 ['Cumnor',     1, Thursday],
 ['Didcot',     1, Monday],
+['MCS',        1, Monday],
 ['University', 1, Monday],
 ['University', 2, Thursday],
 ['Witney',     1, Monday],
@@ -58,8 +59,8 @@ teams = [
 # Division 2
 
 [
-['MCS',        1, Monday],
 ['Cowley',     2, Monday],
+['Cowley',     3, Thursday],
 ['Wantage',    1, Tuesday],
 ['Witney',     2, Monday],
 ['City',       2, Wednesday],
@@ -76,7 +77,6 @@ teams = [
 ['Didcot',     3, Wednesday],
 ['City',       3, Wednesday],
 ['City',       4, Wednesday],
-['Cowley',     3, Thursday],
 ['Witney',     3, Monday],
 ['Cowley',     4, Monday],
 ['MCS',        2, Monday],
